@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Property</title>
+    <link rel="stylesheet" href="/css/new.css">
+</head>
+<body>
+    <div class="form-container">
+        <h1>Add Note</h1>
+        <form action="/noteapp" method="POST">
+            <div class="form-group">
+                <label for="note">Note:</label>
+                <input type="text" class="form-control" id="note" name="note" placeholder="Please write the note">
+                <button type="button" id="record">🎤 Record</button>
+            </div>
+
+
+           
+            <div class="form-group">
+                <label for="imageUrl">Url of the image:</label>
+                <input type="text" class="form-control" id="imageUrl" name="imageUrl" placeholder="Image url">
+            </div>
+
+            <button type="submit" class="btn-submit">Add</button>
+        </form>
+    </div>
+
+    <script>
+        const recordBtn = document.getElementById("record");
+        const noteInput = document.getElementById("note");
+
+        // Initialize SpeechRecognition API
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = false;
+        recognition.lang = "en-US";
+
+        recordBtn.addEventListener("click", () => {
+            if (recordBtn.innerText === "🎤 Record") {
+                recognition.start();
+                recordBtn.innerText = "🛑 Stop";
+            } else {
+                recognition.stop();
+                recordBtn.innerText = "🎤 Record";
+            }
+        });
+
+        recognition.onresult = (event) => {
+            noteInput.value = event.results[0][0].transcript;  // Convert speech to text
+        };
+
+        recognition.onspeechend = () => {
+            recognition.stop();
+            recordBtn.innerText = "🎤 Record";
+        };
+    </script>
+</body>
+</html>

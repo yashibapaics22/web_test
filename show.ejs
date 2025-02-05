@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Property</title>
+    <link rel="stylesheet" href="/css/show.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>All Available Notes</h1>
+        <div>
+            <a href="/">Home</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <img src="<%= property.imageUrl %>" class="card-img-top" alt="Gun Image">
+                        <div class="card-body">
+                            <h2><%= property.note %></h2>
+                           
+                          
+                            <h4>Posted At: <%= property.createdAt.toDateString() %></h4>
+                            <a href="/noteapp/<%= property._id %>">Edit</a>
+                            <form action="/noteapp/<%= property._id %>/delete?_method=DELETE" method="POST">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
